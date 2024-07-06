@@ -19,7 +19,7 @@ const requestHandler = (req, res) => {
 
     if (url === '/users') {
         res.writeHead(200, {"Content-Type": "text/html; charset=utf-8"});
-        
+
         res.write('<html>');
         res.write('<head><title>Users</title><head>');
         res.write(
@@ -43,7 +43,7 @@ const requestHandler = (req, res) => {
         });
         return req.on('end', () => {
             const parsedBody = Buffer.concat(body).toString();
-            console.log(parsedBody);
+            console.log(parsedBody.split('=')[1]);
 
             res.statusCode = 302;
             res.setHeader('Location', '/');
