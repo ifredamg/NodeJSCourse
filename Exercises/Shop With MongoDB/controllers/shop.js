@@ -22,7 +22,7 @@ exports.getProduct = (req, res, next) => {
     //         path: '/products'
     //     })
     // }).catch((err) => console.log(err));
-    Product.findByPk(prodId).then(product => {
+    Product.findById(prodId).then(product => {
         console.log(product);
         res.render('shop/product-detail', {
             product: product,
