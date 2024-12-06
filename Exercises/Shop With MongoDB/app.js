@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-    User.findById("12h1j2khek12db1cjhbcjc") //CREATE COLLECTION AND USER!
+    User.findById("6752c36a1b53b902440074ec")
     .then(user => {
         req.user = user;
         next();
