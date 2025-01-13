@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 const errorController = require('./controllers/error');
 const mongoConnect = require('./util/database').mongoConnect;
@@ -19,14 +20,17 @@ const authRoutes = require('./routes/auth');
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+    session({ secret: 'my secret', resave: false, saveUninitialized: false })
+);
 
 app.use((req, res, next) => {
     User.findById("6773a9b9cf8346a660694911")
-    .then(user => {
-        req.user = user;
-        next();
-    })
-    .catch(err => console.log(err));
+        .then(user => {
+            req.user = user;
+            next();
+        })
+        .catch(err => console.log(err));
 });
 
 app.use('/admin', adminRoutes.routes);
@@ -39,7 +43,7 @@ mongoose
     .connect('mongodb+srv://fred:PuNuB223oklPHi3o@cluster0.orllb.mongodb.net/shop?retryWrites=true&w=majority&appName=Cluster0')
     .then(result => {
         User.findOne().then(user => {
-            if(!user) {
+            if (!user) {
                 const user = new User({
                     name: 'Fred',
                     email: 'fred@test.pt',
@@ -54,4 +58,4 @@ mongoose
         app.listen(3000);
     })
     .catch(err => console.log(err)
-);
+    );
