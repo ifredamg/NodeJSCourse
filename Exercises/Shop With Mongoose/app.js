@@ -36,6 +36,20 @@ app.use(
     })
 );
 
+app.use((req, res, next) => {
+    if(!req.session.user) {
+        console.log("11111");
+        return next();
+    }
+
+    User.findById(req.session.user._id)
+    .then(user => {
+        req.user = user;
+        next();
+    })
+    .catch(err => console.log(err));
+});
+
 app.use('/admin', adminRoutes.routes);
 app.use(shopRoutes);
 app.use(authRoutes);
