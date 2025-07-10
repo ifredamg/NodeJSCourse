@@ -193,6 +193,8 @@ exports.postReset = (req, res, next) => {
       return res.redirect('/reset');
     }
     const token = buffer.toString('hex');
+    console.log(`\nhttp://localhost:3000/reset/${token}`);
+
     User.findOne({ email: req.body.email })
       .then(user => {
         if (!user) {
